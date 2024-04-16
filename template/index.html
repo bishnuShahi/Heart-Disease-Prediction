@@ -1,0 +1,577 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+</head>
+
+<script>
+    {% if error %}
+        window.onload = function() {
+            alert("Pleasea fill all the inputs");
+        };
+    {% endif %}
+</script>
+
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        margin: 2rem;
+        background-color: #f8f4d8;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 50px;
+        border: 1px solid black;
+        width: 50%;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+
+        -webkit-animation: shadow-pop-bl 0.3s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+        animation: shadow-pop-bl 0.3s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+    }
+
+    @-webkit-keyframes shadow-pop-bl {
+        0% {
+            -webkit-box-shadow: 0 0 #3e3e3e;
+            box-shadow: 0 0 #3e3e3e, 0 0 #3e3e3e, 0 0 #3e3e3e, 0 0 #3e3e3e, 0 0 #3e3e3e, 0 0 #3e3e3e, 0 0 #3e3e3e, 0 0 #3e3e3e;
+            -webkit-transform: translateX(0) translateY(0);
+            transform: translateX(0) translateY(0);
+        }
+
+        100% {
+            -webkit-box-shadow: -1px 1px #3e3e3e, -2px 2px #3e3e3e, -3px 3px #3e3e3e, -4px 4px #3e3e3e, -5px 5px #3e3e3e, -6px 6px #3e3e3e, -7px 7px #3e3e3e, -8px 8px #3e3e3e;
+            box-shadow: -1px 1px #3e3e3e, -2px 2px #3e3e3e, -3px 3px #3e3e3e, -4px 4px #3e3e3e, -5px 5px #3e3e3e, -6px 6px #3e3e3e, -7px 7px #3e3e3e, -8px 8px #3e3e3e;
+            -webkit-transform: translateX(8px) translateY(-8px);
+            transform: translateX(8px) translateY(-8px);
+        }
+    }
+
+    @keyframes shadow-pop-bl {
+        0% {
+            -webkit-box-shadow: 0 0 #3e3e3e;
+            box-shadow: 0 0 #3e3e3e;
+            -webkit-transform: translateX(0) translateY(0);
+            transform: translateX(0) translateY(0);
+        }
+
+        100% {
+            -webkit-box-shadow: -1px 1px #3e3e3e, -2px 2px #3e3e3e, -3px 3px #3e3e3e, -4px 4px #3e3e3e, -5px 5px #3e3e3e, -6px 6px #3e3e3e, -7px 7px #3e3e3e, -8px 8px #3e3e3e;
+            box-shadow: -1px 1px #3e3e3e, -2px 2px #3e3e3e, -3px 3px #3e3e3e, -4px 4px #3e3e3e, -5px 5px #3e3e3e, -6px 6px #3e3e3e, -7px 7px #3e3e3e, -8px 8px #3e3e3e;
+            -webkit-transform: translateX(8px) translateY(-8px);
+            transform: translateX(8px) translateY(-8px);
+        }
+    }
+
+    input {
+        height: 30px;
+        width: 100px;
+
+    }
+
+    input[type="radio"] {
+        height: 30px;
+        width: 30px;
+    }
+
+    .inputs {
+        width: 70%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        font-size: 22px;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    button {
+        appearance: none;
+        background-color: transparent;
+        border: 0.125em solid #1A1A1A;
+        border-radius: 0.9375em;
+        box-sizing: border-box;
+        color: #3B3B3B;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 18px;
+        font-weight: 600;
+        line-height: normal;
+        margin: 0;
+        min-height: 3.75em;
+        min-width: 0;
+        outline: none;
+        padding: 1em 2.3em;
+        text-align: center;
+        text-decoration: none;
+        transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        will-change: transform;
+    }
+
+    button:disabled {
+        pointer-events: none;
+    }
+
+    button:hover {
+        color: #fff;
+        background-color: #1A1A1A;
+        box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+        transform: translateY(-2px);
+    }
+
+    button:active {
+        box-shadow: none;
+        transform: translateY(0);
+    }
+
+    .buttons {
+        width: 40%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+    }
+
+    #heading {
+        font-weight: bold;
+        font-size: 40px;
+    }
+
+    #progress-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-color: #dabebe;
+    }
+
+    #progress-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: #74d809;
+        width: 0%;
+    }
+
+    section {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    #myModal_0 {
+        display: block;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    #myModal_1 {
+        display: block;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 12% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 70%;
+        height: 50%;
+        font-size: 50px;
+        text-align: center;
+        
+        -webkit-animation: shadow-pop-bl 0.3s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+        animation: shadow-pop-bl 0.3s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+    }
+    /* The Close Button */
+    span {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    span:hover,
+    span:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+
+    {% if output == 0 %}
+
+    <div id="myModal_0">
+        <div class="modal-content">
+            <span id="close_0">&times;</span>
+            <p>You don't have heart disease! :) </p><br>
+            <p>
+                (This is just for experimental purposes)    
+            </p>
+        </div>
+    </div>
+
+    {% endif %}
+
+    {% if output == 1 %}
+
+    <div id="myModal_1">
+        <div class="modal-content">
+            <span id="close_1">&times;</span>
+            <div class="result" style="display: flex; flex-direction: column; margin-top: 7%;">
+                <p>You <b>don't have</b> a heart disease! :) </p>
+                <p style="font-size: 20px;">(This is just for experimental purposes)</p>
+            </div>
+
+        </div>
+    </div>
+
+    {% endif %}
+
+    <form id="Div" class="myForm" method="post" action="{% url 'predict' %}">
+        {% csrf_token %}
+        <section id="top">
+
+            <h1>PREDICT HEART DISEASE WITH CONFIDENCE</h1>
+            <a href="#age"><button type="button">GET STARTED</button></a>
+
+        </section>
+
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <section id="age">
+            <label id="heading">What is your Age?</label><br>
+            <input min="0" max="120" placeholder="eg. 34" name="age">
+
+            <div class="buttons">
+                <a href="#top"><button type="button">Back</button></a>
+                <a href="#sex"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="sex">
+            <label id="heading">What gender are you?</label><br>
+
+            <div class="inputs">
+
+                <div>
+                    <input id="Male" type="radio" name="sex" value="0">
+                    <label for="Male">Male</label>
+                </div>
+                <div>
+                    <input id="Female" type="radio" name="sex" value="1">
+                    <label for="Female">Female</label>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a href="#age"><button type="button">Back</button></a>
+                <a href="#cp"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="cp">
+            <label id="heading">Select chest pain type: </label>
+
+            <div class="inputs">
+                <div>
+                    <input id="t-angina" type="radio" name="cp" value="0">
+                    <label for="t-angina">Typical angina</label>
+                </div>
+                <div>
+                    <input id="non-t-angina" type="radio" name="cp" value="1">
+                    <label for="non-t-angina">Atypical angina</label>
+                </div>
+                <div>
+                    <input id="non-anginal-pain" type="radio" name="cp" value="2">
+                    <label for="non-anginal-pain">Non-anginal pain</label>
+                </div>
+                <div>
+                    <input id="asymptomatic" type="radio" name="cp" value="3">
+                    <label for="asymptomatic">Asymptomatic</label>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a href="#sex"><button type="button">Back</button></a>
+                <a href="#restbp"><button type="button">Next</button></a>
+            </div>
+        </section>
+
+        <section id="restbp">
+            <label id="heading" for="trestbps">Whats your Resting Blood Pressure(mm Hg)?</label><br>
+            <input id="trestbps" type="number" name="trestbps" placeholder="eg. 120">
+
+            <div class="buttons">
+                <a href="#cp"><button type="button">Back</button></a>
+                <a href="#chol"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="chol">
+            <label id="heading" for="chol">Serum cholesterol (mg/dl):</label><br>
+            <input id="chol" type="number" name="chol" placeholder="eg. 240">
+
+            <div class="buttons">
+                <a href="#restbp"><button type="button">Back</button></a>
+                <a href="#fbs"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="fbs">
+            <label id="heading">Fasting blood sugar level:</label><br>
+
+            <div class="inputs">
+                <div>
+                    <input id="fbs-normal" type="radio" name="fbs" value="0">
+                    <label for="fbs-normal">Normal (&lt;= 120 mg/dl)</label><br>
+                </div>
+                <div>
+                    <input id="fbs-above" type="radio" name="fbs" value="1">
+                    <label for="fbs-above">Above 120 mg/dl</label>
+                </div>
+            </div>
+            <div class="buttons">
+                <a href="#chol"><button type="button">Back</button></a>
+                <a href="#restecg"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="restecg">
+            <label id="heading">Resting electrocardiographic results:</label><br>
+
+            <div class="inputs">
+
+                <div>
+                    <input id="restecg-normal" type="radio" name="restecg" value="0">
+                    <label for="restecg-normal">Normal</label><br>
+                </div>
+                <div>
+                    <input id="restecg-abnormal" type="radio" name="restecg" value="1">
+                    <label for="restecg-abnormal">ST-T wave abnormality</label><br>
+                </div>
+                <div>
+                    <input id="restecg-lvh" type="radio" name="restecg" value="2">
+                    <label for="restecg-lvh">Probable or definite LVH</label>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a href="#fbs"><button type="button">Back</button></a>
+                <a href="#thalach"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="thalach">
+            <label id="heading">Maximum heart rate achieved (bpm):</label><br>
+            <input id="thalach" name="thalach" placeholder="eg. 160">
+
+            <div class="buttons">
+                <a href="#restecg"><button type="button">Back</button></a>
+                <a href="#exang"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="exang">
+            <label id="heading">Exercise-induced angina:</label><br>
+
+            <div class="inputs">
+
+                <div>
+                    <input id="exang-yes" type="radio" name="exang" value="0">
+                    <label for="exang-yes">Yes</label><br>
+                </div>
+                <div>
+                    <input id="exang-no" type="radio" name="exang" value="1">
+                    <label for="exang-no">No</label>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a href="#thalach"><button type="button">Back</button></a>
+                <a href="#oldpeak"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="oldpeak">
+            <label id="heading">ST depression induced by exercise:</label><br>
+            <input id="oldpeak" name="oldpeak" step="any" placeholder="eg. 1.5">
+
+            <div class="buttons">
+                <a href="#exang"><button type="button">Back</button></a>
+                <a href="#slope"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="slope">
+            <label id="heading">Slope of peak exercise ST segment:</label><br>
+
+            <div class="inputs">
+                <div>
+                    <input id="slope-upsloping" type="radio" name="slope" value="0">
+                    <label for="slope-upsloping">Upsloping</label><br>
+                </div>
+                <div>
+                    <input id="slope-flat" type="radio" name="slope" value="1">
+                    <label for="slope-flat">Flat</label><br>
+                </div>
+                <div>
+                    <input id="slope-downsloping" type="radio" name="slope" value="2">
+                    <label for="slope-downsloping">Downsloping</label>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a href="#oldpeak"><button type="button">Back</button></a>
+                <a href="#ca"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="ca">
+            <label id="heading">Number of major vessels colored by fluoroscopy: (1-4)</label>
+
+            <input id="ca" name="ca" type="number" min=1 max=4 placeholder="eg. 2">
+
+            <div class="buttons">
+                <a href="#slope"><button type="button">Back</button></a>
+                <a href="#thal"><button type="button">Next</button></a>
+            </div>
+
+        </section>
+
+        <section id="thal">
+            <label id="heading">Thalium stress test result:</label><br>
+
+            <div class="inputs">
+
+                <div>
+                    <input id="thal-normal" type="radio" name="thal" value="0">
+                    <label for="thal-normal">Normal</label><br>
+                </div>
+                <div>
+                    <input id="thal-fixed" type="radio" name="thal" value="1">
+                    <label for="thal-fixed">Fixed defect</label><br>
+                </div>
+                <div>
+                    <input id="thal-reversible" type="radio" name="thal" value="2">
+                    <label for="thal-reversible">Reversible defect</label><br>
+                </div>
+                <div>
+                    <input id="thal-not-described" type="radio" name="thal" value="3">
+                    <label for="thal-not-described">Not described</label>
+                </div>
+            </div>
+
+
+            <div class="buttons">
+                <a href="#ca"><button type="button">Back</button></a>
+                <a href="{% url 'index' %}"><button type="button">Reset</button></a>
+                <button type="submit" data-toggle="modal" data-target="#modal-prediction">SUBMIT</button>
+            </div>
+
+        </section>
+    </form>
+    
+    <script>
+
+        const modal0 = document.getElementById("myModal_0");
+        const modal1 = document.getElementById("myModal_1");
+
+        const modal_content = document.querySelector(".modal-content")
+
+        const closeButton0 = document.getElementById("close_0");
+        const closeButton1 = document.getElementById("close_1");
+        
+        closeButton0?.addEventListener("click", function() {
+            modal0.remove();
+        });
+
+        modal0?.addEventListener("click", function(e) {
+            if (e.target !== modal_content && modal0.contains(e.target)) {
+            modal0.remove();
+            }
+        });
+
+        closeButton1?.addEventListener("click", function() {
+            modal1.remove();
+        });
+
+        modal1?.addEventListener("click", function(e) {
+            if (e.target !== modal_content && modal1.contains(e.target)) {
+            modal1.remove();
+            }
+        });
+
+    </script>
+
+    <script>
+        const progressBar = document.querySelector('#progress-bar');
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            const progressWidth = scrolled * 100;
+
+            progressBar.style.width = `${progressWidth}%`;
+        });
+    </script>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
