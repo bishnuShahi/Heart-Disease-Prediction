@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest
 import pandas as pd
 import numpy as np
 from scipy.stats import boxcox
@@ -51,7 +51,10 @@ def predict(request):
             output = output.tolist()[0]
 
             print("Output received:", output)
+
             return render(request, 'index.html', {'output' : output})
+
+                
         except TypeError as e:
             return render(request, 'index.html', {'error': True})
     return HttpResponseBadRequest("Something unexpected occurred! Please reload the page.")
